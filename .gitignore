@@ -246,3 +246,5 @@ ModelManifest.xml
 
 # Precompiled Shader Header Files
 *.shh
+/Engine/pilgrim108x140.bmp
+/Engine/link90x90.bmp
