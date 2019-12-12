@@ -1,6 +1,7 @@
 #pragma once
 #include "Colors.h"
 #include <string>
+#include "RectI.h"
 
 class Surface
 {
@@ -13,7 +14,8 @@ public:
 	void PutPixel(int x, int y, Color c);
 	Color GetPixel(int x, int y) const;
 	int GetWidth() const;
-	int GetHeight()const;
+	int GetHeight() const;
+	RectI GetRect() const;
 private:
 	Color* pPixels = nullptr;
 	int width;
