@@ -59,12 +59,21 @@ public:
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );
 	}
 	void PutPixel( int x,int y,Color c );
+	Color GetPixel(int x, int y) const;
 	void DrawSpriteNonChroma(int x, int y, const Surface& s);
 	void DrawSpriteNonChroma(int x, int y, const RectI& srcRect, const Surface& s);
 	void DrawSpriteNonChroma(int x, int y, RectI srcRect, const RectI& clip, const Surface& s);
 	void DrawSprite(int x, int y, const Surface& s, Color chroma = Colors::Magenta);
 	void DrawSprite(int x, int y, RectI srcRect, const Surface& s, Color chroma = Colors::Magenta);
 	void DrawSprite(int x, int y, RectI srcRect, const RectI& clip, const Surface& s, Color chroma = Colors::Magenta);
+	// Substitutes color with other
+	void DrawSpriteSubstitute(int x, int y, Color substitute, const Surface& s, Color chroma = Colors::Magenta);
+	void DrawSpriteSubstitute(int x, int y, Color substitute, RectI srcRect, const Surface& s, Color chroma = Colors::Magenta);
+	void DrawSpriteSubstitute(int x, int y, Color substitute, RectI srcRect, const RectI& clip, const Surface& s, Color chroma = Colors::Magenta);
+	// Draw ghost effect
+	void DrawSpriteGhost(int x, int y, const Surface& s, Color chroma = Colors::Magenta);
+	void DrawSpriteGhost(int x, int y, RectI srcRect, const Surface& s, Color chroma = Colors::Magenta);
+	void DrawSpriteGhost(int x, int y, RectI srcRect, const RectI& clip, const Surface& s, Color chroma = Colors::Magenta);
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

@@ -21,6 +21,7 @@
 #include "MainWindow.h"
 #include "Game.h"
 
+
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
@@ -55,6 +56,15 @@ void Game::UpdateModel()
 	{
 		dir.x += 1.0f;
 	}
+	if ( !wnd.kbd.KeyIsEmpty() )
+	{
+		const auto e = wnd.kbd.ReadKey();
+
+		if ( e.IsPress() && e.GetCode() == VK_SPACE )
+		{
+			link.ActivateEffetc();
+		}
+	}
 
 	link.SetDirection( dir );
 	link.Update(ft.Mark());
@@ -62,5 +72,6 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	font.DrawText("Chumbala ca, \nChumbala ca.", wnd.mouse.GetPos(), gfx);
 	link.Draw(gfx);
 }

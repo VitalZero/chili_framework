@@ -9,6 +9,10 @@ public:
 	Animation(int x, int y, int width, int height, int count, const Surface& sprite, float holdTime, Color chroma = Colors::Magenta);
 	void Draw(const Vei2& pos, Graphics& gfx) const;
 	void Draw(const Vei2& pos, Graphics& gfx, const RectI& clip) const;
+	// Draw with color effect
+	void DrawColor(const Vei2& pos, Graphics& gfx, Color c) const;
+	// Draw ghost effect
+	void DrawGhost(const Vei2& pos, Graphics& gfx) const;
 	void Update(float dt);
 private:
 	void Advance();
