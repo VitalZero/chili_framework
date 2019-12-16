@@ -27,8 +27,6 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd )
 {
-	Vei2 v;
-	auto v2 = v.GetNormalized();
 }
 
 void Game::Go()
@@ -74,6 +72,6 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	font.DrawText("Chumbala ca, \nChumbala ca.", wnd.mouse.GetPos(), gfx);
+	font.DrawText("Chumbala ca, \nChumbala ca.", wnd.mouse.GetPos(), Colors::White, gfx);
 	link.Draw(gfx);
 }

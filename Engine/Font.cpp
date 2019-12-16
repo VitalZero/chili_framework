@@ -1,5 +1,6 @@
 #include "Font.h"
 #include <cassert>
+#include "SpriteEffect.h"
 
 Font::Font(const std::string & fileName, Color chroma)
 	:
@@ -12,20 +13,27 @@ Font::Font(const std::string & fileName, Color chroma)
 	assert(glyphHeight * nRows == font.GetHeight());
 }
 
-void Font::DrawText(const std::string & text, const Vei2 & pos, Graphics & gfx)
+void Font::DrawText(const std::string & text, const Vei2 & pos, Color color, Graphics & gfx)
 {
+	// effect functor
+	SpriteEffect::Substitution e{ chroma, color };
+
+	// curPos is the pos where we are drawing on the screen
 	auto curPos = pos;
 	for (auto& c : text)
 	{
+		// if newline, move down 1 y pos and reset x pos
 		if (c == '\n')
 		{
+			// reset x pos (carriage return)
 			curPos.x = pos.x;
+			// move down 1 pos
 			curPos.y += glyphHeight;
 			continue;
 		}
 		else if (c >= firstChar && c <= lastChar)
 		{
-			gfx.DrawSpriteSubstitute(curPos.x, curPos.y, Colors::White, MapGlyphRect(c), font, chroma);
+			gfx.DrawSprite(curPos.x, curPos.y, MapGlyphRect(c), font, e);
 		}
 		curPos.x += glyphWidth;
 	}
