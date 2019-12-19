@@ -24,8 +24,9 @@ void Character::Draw(Graphics & gfx) const
 	}
 	else
 	{
-		animations[(int)iCurSequence].DrawGhost((Vei2)pos, gfx);
+		//animations[(int)iCurSequence].DrawGhost((Vei2)pos, gfx);
 		//animations[(int)iCurSequence].Draw((Vei2)pos, gfx);
+		animations[(int)iCurSequence].DrawNegative((Vei2)pos, gfx);
 	}
 	
 }

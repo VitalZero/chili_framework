@@ -4,6 +4,23 @@
 
 namespace SpriteEffect
 {
+	class Negative
+	{
+	public:
+		Negative(Color c)
+			:
+			chroma(c)
+		{}
+		void operator()(Color cSrc, int xDest, int yDest, Graphics& gfx) const
+		{
+			if (cSrc != chroma)
+			{
+				gfx.PutPixel(xDest, yDest, { 255u - cSrc.GetR(), 255u - cSrc.GetG(), 255u - cSrc.GetB()} );
+			}
+		}
+	private:
+		Color chroma;
+	};
 	class Chroma
 	{
 	public:

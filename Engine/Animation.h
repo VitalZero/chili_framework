@@ -13,6 +13,7 @@ public:
 	void DrawColor(const Vei2& pos, Graphics& gfx, Color c) const;
 	// Draw ghost effect
 	void DrawGhost(const Vei2& pos, Graphics& gfx) const;
+	void DrawNegative(const Vei2& pos, Graphics& gfx) const;
 	void Update(float dt);
 private:
 	void Advance();

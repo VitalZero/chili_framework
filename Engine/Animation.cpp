@@ -38,6 +38,12 @@ void Animation::DrawGhost(const Vei2 & pos, Graphics & gfx) const
 	gfx.DrawSprite(pos.x, pos.y, frames[iCurFrame], sprite, e);
 }
 
+void Animation::DrawNegative(const Vei2 & pos, Graphics & gfx) const
+{
+	SpriteEffect::Negative e{ chroma };
+	gfx.DrawSprite(pos.x, pos.y, frames[iCurFrame], sprite, e);
+}
+
 void Animation::Update(float dt)
 {
 	curFrameTime += dt;
