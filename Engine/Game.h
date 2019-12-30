@@ -28,13 +28,14 @@
 #include "FrameTimer.h"
 #include "Character.h"
 #include "Font.h"
+#include "Surface.h"
 
 class Game
 {
 public:
-	Game( class MainWindow& wnd );
-	Game( const Game& ) = delete;
-	Game& operator=( const Game& ) = delete;
+	Game(class MainWindow& wnd);
+	Game(const Game&) = delete;
+	Game& operator=(const Game&) = delete;
 	void Go();
 private:
 	void ComposeFrame();
@@ -48,7 +49,8 @@ private:
 	/********************************/
 	/*  User Variables              */
 	FrameTimer ft;
-	Character link = Character( { 100.0f, 100.0f } );
+	Character link = Character({ 100.0f, 100.0f });
 	Font font = Font("Fixedsys16x28.bmp");
+	std::vector<Surface> surfaces;
 	/********************************/
 };

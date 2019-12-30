@@ -5,6 +5,8 @@
 
 Surface::Surface(const std::string & fileName)
 {
+	OutputDebugStringA("Surface loaded from file.\n");
+
 	std::ifstream file(fileName, std::ios::binary);
 	assert(file);
 
@@ -89,6 +91,8 @@ Surface::Surface(const Surface & rhs)
 	:
 	Surface(rhs.width, rhs.height)
 {
+	OutputDebugStringA("Surface copy ctor called.\n");
+
 	const int nPixels = width * height;
 	for (int i = 0; i < nPixels; ++i)
 	{
@@ -96,14 +100,51 @@ Surface::Surface(const Surface & rhs)
 	}
 }
 
+Surface::Surface(Surface&& donor) noexcept
+	:
+	width(donor.width),
+	height(donor.height),
+	pPixels(donor.pPixels)
+{
+	OutputDebugStringA("Surface move ctor called.\n");
+
+	donor.pPixels = nullptr;
+	donor.width = 0;
+	donor.height = 0;
+}
+
 Surface::~Surface()
 {
+	OutputDebugStringA("Surface dtor called.\n");
+
 	delete[] pPixels;
 	pPixels = nullptr;
 }
 
+Surface & Surface::operator=(Surface && donor) noexcept
+{
+	OutputDebugStringA("Surface move ass called.\n");
+	
+	if (this != &donor)
+	{
+		width = donor.width;
+		height = donor.height;
+		
+		delete[] pPixels;
+		pPixels = donor.pPixels;
+
+		donor.pPixels = nullptr;
+		donor.width = 0;
+		donor.height = 0;
+	}
+
+	return *this;
+}
+
 Surface & Surface::operator=(const Surface & rhs)
 {
+	OutputDebugStringA("Surface copy ass called.\n");
+
 	if (this != &rhs)
 	{
 		width = rhs.width;
