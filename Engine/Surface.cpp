@@ -95,28 +95,6 @@ Surface & Surface::operator=(Surface&& rhs) noexcept
 	return *this;
 }
 
-void Surface::PutPixel(int x, int y, Color c)
-{
-	assert(x >= 0);
-	assert(x < width);
-	assert(y >= 0);
-	assert(y < height);
-
-	//pixels[y * width + x] = c;
-	pixels.data()[y * width + x] = c;
-}
-
-Color Surface::GetPixel(int x, int y) const
-{
-	assert(x >= 0);
-	assert(x < width);
-	assert(y >= 0);
-	assert(y < height);
-
-	//return pixels[y * width + x];
-	return pixels.data()[y * width + x];
-}
-
 int Surface::GetWidth() const
 {
 	return width;
@@ -130,11 +108,6 @@ int Surface::GetHeight() const
 RectI Surface::GetRect() const
 {
 	return { 0, width, 0, height };
-}
-
-void Surface::SetFill(Color c)
-{
-	std::fill(pixels.begin(), pixels.begin() + height * width, c);
 }
 
 const Color* Surface::Data() const
