@@ -20,7 +20,8 @@
  ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
-
+#include <random>
+#include "SpriteEffect.h"
 
 Game::Game(MainWindow& wnd)
 	:
