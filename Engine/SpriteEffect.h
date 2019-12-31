@@ -59,6 +59,7 @@ namespace SpriteEffect
 	};
 	class Copy
 	{
+	public:
 		void operator()(Color cSrc, int xDest, int yDest, Graphics& gfx) const
 		{
 			gfx.PutPixel(xDest, yDest, cSrc);

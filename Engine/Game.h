@@ -29,6 +29,7 @@
 #include "Character.h"
 #include "Font.h"
 #include "Surface.h"
+#include "Bencher.h"
 
 class Game
 {
@@ -51,6 +52,8 @@ private:
 	FrameTimer ft;
 	Character link = Character({ 100.0f, 100.0f });
 	Font font = Font("Fixedsys16x28.bmp");
-	//std::vector<Surface> surfaces;
+	std::vector<Vei2> positions;
+	Bencher bencher;
+	Surface s = Surface("link90x90.bmp");
 	/********************************/
 };

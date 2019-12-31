@@ -42,7 +42,7 @@ Surface::Surface(const std::string & fileName)
 		dy = - 1;
 	}
 
-	pPixels = std::make_unique<Color[]>(width * height);
+	pPixels.resize(width * height);
 
 	const unsigned int iOffsetData = bmpFileHeader.bfOffBits;
 
@@ -83,7 +83,7 @@ Surface::Surface(int width, int height)
 	:
 	width(width),
 	height(height),
-	pPixels(std::make_unique<Color[]>(width * height) )
+	pPixels(width*height)
 {
 }
 
@@ -109,7 +109,7 @@ Surface & Surface::operator=(const Surface & rhs)
 		width = rhs.width;
 		height = rhs.height;
 	
-		pPixels = std::make_unique<Color[]>(width * height);
+		pPixels.resize(width * height);
 
 		const int nPixels = width * height;
 		for (int i = 0; i < nPixels; ++i)

@@ -3,6 +3,7 @@
 #include <string>
 #include "Rect.h"
 #include <memory>
+#include <vector>
 
 class Surface
 {
@@ -22,7 +23,7 @@ public:
 	int GetHeight() const;
 	RectI GetRect() const;
 private:
-	std::unique_ptr<Color[]> pPixels;
+	std::vector<Color> pPixels;
 	int width = 0;
 	int height = 0;
 };
