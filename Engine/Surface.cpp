@@ -5,8 +5,6 @@
 
 Surface::Surface(const std::string & fileName)
 {
-	OutputDebugStringA("Surface loaded from file.\n");
-
 	std::ifstream file(fileName, std::ios::binary);
 	assert(file);
 
@@ -42,11 +40,10 @@ Surface::Surface(const std::string & fileName)
 		dy = - 1;
 	}
 
-	pPixels.resize(width * height);
+	pixels.resize(width * height);
+	
+	file.seekg(bmpFileHeader.bfOffBits, std::ios::beg);
 
-	const unsigned int iOffsetData = bmpFileHeader.bfOffBits;
-
-	file.seekg(iOffsetData, std::ios::beg);
 	const unsigned int nPadding = (width % 4) % 4;
 	//const unsigned int nPadding = (4 - (width * 3) % 4) % 4;
 
@@ -58,19 +55,13 @@ Surface::Surface(const std::string & fileName)
 			const unsigned char b = file.get();
 			const unsigned char g = file.get();
 			const unsigned char r = file.get();
+			
+			PutPixel(x, y, { r, g, b });
 
 			if (is32Bit)
 			{
-				/*unsigned int dwPixels;
-
-				file.read(reinterpret_cast<char*>(&dwPixels), sizeof(dwPixels));
-
-				cPixel.dword = dwPixels;*/
-
 				file.seekg(1, std::ios::cur);
-			}
-
-			PutPixel(x, y, { r, g, b });
+			}			
 		}
 		if (!is32Bit)
 		{
@@ -83,40 +74,24 @@ Surface::Surface(int width, int height)
 	:
 	width(width),
 	height(height),
-	pPixels(width*height)
+	pixels(width*height)
 {
 }
 
-Surface::Surface(const Surface & rhs)
-	:
-	Surface(rhs.width, rhs.height)
+Surface::Surface(Surface && donor) noexcept
 {
-	OutputDebugStringA("Surface copy ctor called.\n");
-
-	const int nPixels = width * height;
-	for (int i = 0; i < nPixels; ++i)
-	{
-		pPixels[i] = rhs.pPixels[i];
-	}
+	*this = std::move(donor);
 }
 
-Surface & Surface::operator=(const Surface & rhs)
+Surface & Surface::operator=(Surface&& rhs) noexcept
 {
-	OutputDebugStringA("Surface copy ass called.\n");
-
-	if (this != &rhs)
-	{
-		width = rhs.width;
-		height = rhs.height;
+	width = rhs.width;
+	height = rhs.height;
 	
-		pPixels.resize(width * height);
+	pixels = std::move(rhs.pixels);
+	rhs.width = 0;
+	rhs.height = 0;
 
-		const int nPixels = width * height;
-		for (int i = 0; i < nPixels; ++i)
-		{
-			pPixels[i] = rhs.pPixels[i];
-		}
-	}
 	return *this;
 }
 
@@ -127,7 +102,7 @@ void Surface::PutPixel(int x, int y, Color c)
 	assert(y >= 0);
 	assert(y < height);
 
-	pPixels[y * width + x] = c;
+	pixels[y * width + x] = c;
 }
 
 Color Surface::GetPixel(int x, int y) const
@@ -137,7 +112,7 @@ Color Surface::GetPixel(int x, int y) const
 	assert(y >= 0);
 	assert(y < height);
 
-	return pPixels[y * width + x];
+	return pixels[y * width + x];
 }
 
 int Surface::GetWidth() const
@@ -153,4 +128,9 @@ int Surface::GetHeight() const
 RectI Surface::GetRect() const
 {
 	return { 0, width, 0, height };
+}
+
+const Color* Surface::GetData() const
+{
+	return pixels.data();
 }
