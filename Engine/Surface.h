@@ -22,6 +22,7 @@ public:
 	int GetWidth() const;
 	int GetHeight() const;
 	RectI GetRect() const;
+	void SetFill(Color c);
 	const Color* Data() const;
 private:
 	std::vector<Color> pixels;
