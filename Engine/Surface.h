@@ -2,6 +2,7 @@
 #include "Colors.h"
 #include <string>
 #include "Rect.h"
+#include <memory>
 
 class Surface
 {
@@ -10,10 +11,9 @@ public:
 	Surface(int width, int height);
 	Surface(const Surface& rhs);
 	// move ctor
-	Surface(Surface&& donor) noexcept;
-	~Surface();
+	Surface(Surface&& donor) noexcept = default;
 	// move assignement
-	Surface& operator=(Surface&& donor) noexcept;
+	Surface& operator=(Surface&& donor) noexcept = default;
 	Surface& operator=(const Surface& rhs);
 	Surface() = default;
 	void PutPixel(int x, int y, Color c);
@@ -22,7 +22,7 @@ public:
 	int GetHeight() const;
 	RectI GetRect() const;
 private:
-	Color* pPixels = nullptr;
+	std::unique_ptr<Color[]> pPixels;
 	int width = 0;
 	int height = 0;
 };

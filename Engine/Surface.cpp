@@ -42,7 +42,7 @@ Surface::Surface(const std::string & fileName)
 		dy = - 1;
 	}
 
-	pPixels = new Color[width * height];
+	pPixels = std::make_unique<Color[]>(width * height);
 
 	const unsigned int iOffsetData = bmpFileHeader.bfOffBits;
 
@@ -83,7 +83,7 @@ Surface::Surface(int width, int height)
 	:
 	width(width),
 	height(height),
-	pPixels(new Color[width * height])
+	pPixels(std::make_unique<Color[]>(width * height) )
 {
 }
 
@@ -100,47 +100,6 @@ Surface::Surface(const Surface & rhs)
 	}
 }
 
-Surface::Surface(Surface&& donor) noexcept
-	:
-	width(donor.width),
-	height(donor.height),
-	pPixels(donor.pPixels)
-{
-	OutputDebugStringA("Surface move ctor called.\n");
-
-	donor.pPixels = nullptr;
-	donor.width = 0;
-	donor.height = 0;
-}
-
-Surface::~Surface()
-{
-	OutputDebugStringA("Surface dtor called.\n");
-
-	delete[] pPixels;
-	pPixels = nullptr;
-}
-
-Surface & Surface::operator=(Surface && donor) noexcept
-{
-	OutputDebugStringA("Surface move ass called.\n");
-	
-	if (this != &donor)
-	{
-		width = donor.width;
-		height = donor.height;
-		
-		delete[] pPixels;
-		pPixels = donor.pPixels;
-
-		donor.pPixels = nullptr;
-		donor.width = 0;
-		donor.height = 0;
-	}
-
-	return *this;
-}
-
 Surface & Surface::operator=(const Surface & rhs)
 {
 	OutputDebugStringA("Surface copy ass called.\n");
@@ -149,11 +108,8 @@ Surface & Surface::operator=(const Surface & rhs)
 	{
 		width = rhs.width;
 		height = rhs.height;
-
-		delete[] pPixels;
-		pPixels = nullptr;
 	
-		pPixels = new Color[width * height];
+		pPixels = std::make_unique<Color[]>(width * height);
 
 		const int nPixels = width * height;
 		for (int i = 0; i < nPixels; ++i)

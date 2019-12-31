@@ -51,6 +51,6 @@ private:
 	FrameTimer ft;
 	Character link = Character({ 100.0f, 100.0f });
 	Font font = Font("Fixedsys16x28.bmp");
-	std::vector<Surface> surfaces;
+	//std::vector<Surface> surfaces;
 	/********************************/
 };
