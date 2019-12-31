@@ -130,7 +130,7 @@ RectI Surface::GetRect() const
 	return { 0, width, 0, height };
 }
 
-const Color* Surface::GetData() const
+const Color* Surface::Data() const
 {
 	return pixels.data();
 }
